@@ -29,6 +29,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("isAdmin");
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("token"); // Remove token on logout
     alert("Logged out!");
     setIsAuthenticated(false);
     setIsAdmin(false);
@@ -43,10 +44,13 @@ const Navbar = () => {
         <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Home</Link>
         <Link to="/book" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Book Bus</Link>
         <Link to="/ship" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Ship Goods</Link>
-        {isAdmin && <Link to="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Admin</Link>}
-        {!isAuthenticated ? (
+        {isAdmin ? (
+          <Link to="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Admin</Link>
+        ) : null}
+        {!isAuthenticated && !isAdmin ? (
           <Link to="/login" className="ml-4 px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800">Login</Link>
-        ) : (
+        ) : null}
+        {isAuthenticated && !isAdmin ? (
           <div className="relative">
             <button
               onClick={() => setProfileOpen((v) => !v)}
@@ -69,6 +73,14 @@ const Navbar = () => {
               </div>
             )}
           </div>
+        ) : null}
+        {isAdmin && (
+          <button
+            onClick={handleLogout}
+            className="ml-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Logout
+          </button>
         )}
         <button
           onClick={() => setDarkMode((v) => !v)}
@@ -94,10 +106,13 @@ const Navbar = () => {
           <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/book" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium" onClick={() => setMenuOpen(false)}>Book Bus</Link>
           <Link to="/ship" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium" onClick={() => setMenuOpen(false)}>Ship Goods</Link>
-          {isAdmin && <Link to="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium" onClick={() => setMenuOpen(false)}>Admin</Link>}
-          {!isAuthenticated ? (
+          {isAdmin ? (
+            <Link to="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium" onClick={() => setMenuOpen(false)}>Admin</Link>
+          ) : null}
+          {!isAuthenticated && !isAdmin ? (
             <Link to="/login" className="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800" onClick={() => setMenuOpen(false)}>Login</Link>
-          ) : (
+          ) : null}
+          {isAuthenticated && !isAdmin ? (
             <div className="flex flex-col items-center w-full">
               <Link to="/profile" className="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-gray-700 w-full text-center" onClick={() => setMenuOpen(false)}>Profile</Link>
               <button
@@ -107,6 +122,14 @@ const Navbar = () => {
                 Logout
               </button>
             </div>
+          ) : null}
+          {isAdmin && (
+            <button
+              onClick={() => { setMenuOpen(false); handleLogout(); }}
+              className="w-full text-left px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 mt-2"
+            >
+              Logout
+            </button>
           )}
         </div>
       )}

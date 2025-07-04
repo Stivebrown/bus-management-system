@@ -12,6 +12,8 @@ const AdminLogin = () => {
     e.preventDefault();
     if (password === ADMIN_PASSWORD) {
       localStorage.setItem("isAdmin", "true");
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("token", "mock-admin-token"); // Set mock token for analytics
       setError("");
       navigate("/dashboard");
     } else {

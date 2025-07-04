@@ -15,6 +15,7 @@ import BookingHistory from "./components/BookingHistory";
 import ShipmentTracking from "./components/ShipmentTracking";
 import { ToastProvider } from "./components/ToastProvider";
 import LiveChat from "./components/LiveChat";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/book" element={<BusBooking />} />
               <Route path="/ship" element={<ShippingRequest />} />
-              <Route path="/dashboard" element={<AdminDashboard />} />
+              <Route path="/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/admin-login" element={<AdminLogin />} />
