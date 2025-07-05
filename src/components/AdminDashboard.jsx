@@ -30,6 +30,8 @@ const AdminDashboard = () => {
   const [analytics, setAnalytics] = useState({ revenue: 0, occupancy: [], statusCounts: {}});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [bookings, setBookings] = useState([]);
+  const [shippings, setShippings] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -57,9 +59,26 @@ const AdminDashboard = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (tab === "bookings") {
+      fetch("/api/admin/bookings", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
+        .then(res => res.json())
+        .then(data => setBookings(data))
+        .catch(() => setBookings([]));
+    }
+    if (tab === "shippings") {
+      fetch("/api/admin/shippings", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
+        .then(res => res.json())
+        .then(data => setShippings(data))
+        .catch(() => setShippings([]));
+    }
+  }, [tab]);
+
   // Analytics data
-  const revenue = mockBookings.reduce((sum, b) => sum + b.amount, 0);
-  const occupancy = [60, 80, 90, 70, 50];
   const barData = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri"],
     datasets: [{ label: "Occupancy %", data: analytics.occupancy, backgroundColor: "#2563eb" }],
@@ -93,7 +112,7 @@ const AdminDashboard = () => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (evt) => {
+    reader.onload = () => {
       alert("CSV imported! (mock)");
     };
     reader.readAsText(file);
@@ -121,6 +140,8 @@ const AdminDashboard = () => {
         <button onClick={() => setTab("incidents")} className={`px-4 py-2 rounded ${tab === "incidents" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>Incidents</button>
         <button onClick={() => setTab("schedule")} className={`px-4 py-2 rounded ${tab === "schedule" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>Schedule Optimization</button>
         <button onClick={() => setTab("email")} className={`px-4 py-2 rounded ${tab === "email" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>Email Templates</button>
+        <button onClick={() => setTab("bookings")} className={`px-4 py-2 rounded ${tab === "bookings" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>All Bookings</button>
+        <button onClick={() => setTab("shippings")} className={`px-4 py-2 rounded ${tab === "shippings" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>All Shippings</button>
       </div>
       {tab === "analytics" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -237,6 +258,68 @@ const AdminDashboard = () => {
             <strong>Preview:</strong>
             <pre>{emailTemplate.replace("{{name}}", "Jane Doe")}</pre>
           </div>
+        </div>
+      )}
+      {tab === "bookings" && (
+        <div className="bg-white rounded shadow p-4 overflow-x-auto">
+          <h3 className="font-semibold mb-2">All Bookings</h3>
+          <table className="w-full text-left border mb-4">
+            <thead>
+              <tr className="bg-blue-50">
+                <th className="p-2">ID</th>
+                <th className="p-2">User</th>
+                <th className="p-2">From</th>
+                <th className="p-2">To</th>
+                <th className="p-2">Date</th>
+                <th className="p-2">Status</th>
+                <th className="p-2">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map(b => (
+                <tr key={b.id} className="border-t">
+                  <td className="p-2">{b.id}</td>
+                  <td className="p-2">{b.user}</td>
+                  <td className="p-2">{b.from}</td>
+                  <td className="p-2">{b.to}</td>
+                  <td className="p-2">{b.date}</td>
+                  <td className="p-2">{b.status}</td>
+                  <td className="p-2">{b.amount.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {tab === "shippings" && (
+        <div className="bg-white rounded shadow p-4 overflow-x-auto">
+          <h3 className="font-semibold mb-2">All Shippings</h3>
+          <table className="w-full text-left border mb-4">
+            <thead>
+              <tr className="bg-blue-50">
+                <th className="p-2">ID</th>
+                <th className="p-2">Sender</th>
+                <th className="p-2">Origin</th>
+                <th className="p-2">Destination</th>
+                <th className="p-2">Date</th>
+                <th className="p-2">Status</th>
+                <th className="p-2">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {shippings.map(s => (
+                <tr key={s.id} className="border-t">
+                  <td className="p-2">{s.id}</td>
+                  <td className="p-2">{s.sender}</td>
+                  <td className="p-2">{s.origin}</td>
+                  <td className="p-2">{s.destination}</td>
+                  <td className="p-2">{s.date}</td>
+                  <td className="p-2">{s.status}</td>
+                  <td className="p-2">{s.amount.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
