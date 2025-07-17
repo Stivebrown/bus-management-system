@@ -1,0 +1,289 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "jaden",
+      "email": "jadenlaren@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": 2,
+      "name": "roland",
+      "email": "roland@gmail.com",
+      "password": "123456"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Douala",
+      "date": "2025-07-10",
+      "time": "14:46",
+      "status": "confirmed"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Limbe",
+      "date": "2025-07-16",
+      "time": "15:49",
+      "status": "pending"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Douala",
+      "date": "2025-07-16",
+      "time": "22:21",
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Douala",
+      "date": "2025-07-24",
+      "time": "20:19",
+      "status": "confirmed"
+    },
+    {
+      "id": 5,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Limbe",
+      "date": "2025-07-16",
+      "time": "12:28",
+      "status": "pending"
+    },
+    {
+      "id": 6,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Douala",
+      "date": "2025-07-06",
+      "time": "09:40",
+      "status": "pending"
+    },
+    {
+      "id": 7,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Maroua",
+      "date": "2025-07-07",
+      "time": "22:49",
+      "status": "confirmed"
+    },
+    {
+      "id": 8,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Bafoussam",
+      "date": "2025-07-20",
+      "time": "03:00",
+      "status": "pending"
+    },
+    {
+      "id": 9,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Bamenda",
+      "date": "2025-07-15",
+      "time": "22:44",
+      "status": "confirmed"
+    },
+    {
+      "id": 10,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Bafoussam",
+      "date": "2025-07-15",
+      "time": "22:47",
+      "status": "pending"
+    },
+    {
+      "id": 11,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Douala",
+      "date": "2025-07-15",
+      "time": "10:53",
+      "status": "pending"
+    },
+    {
+      "id": 12,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Garoua",
+      "date": "2025-07-23",
+      "time": "14:03",
+      "bus_type": "70-seater",
+      "seats": [
+        "12",
+        "13",
+        "14"
+      ],
+      "tickets": 3,
+      "amount": 45000,
+      "name": "laclong stive",
+      "phone": "611312358",
+      "email": "2004laclongstive@gmail.com",
+      "status": "confirmed"
+    },
+    {
+      "id": 13,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Bamenda",
+      "date": "2025-07-17",
+      "time": "20:53",
+      "bus_type": "70-seater",
+      "seats": [
+        "6"
+      ],
+      "tickets": 1,
+      "amount": 7000,
+      "name": "Eng. Mukete",
+      "phone": "677580019",
+      "email": "eddymukete55@gmail.com",
+      "status": "confirmed"
+    },
+    {
+      "id": 14,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Ngaoundere",
+      "date": "2025-07-24",
+      "time": "07:26",
+      "bus_type": "70-seater",
+      "seats": [
+        "12",
+        "44"
+      ],
+      "tickets": 2,
+      "amount": 24000,
+      "name": "Ngah Roland",
+      "phone": "68187815",
+      "email": "roland@gmail.com",
+      "status": "confirmed"
+    },
+    {
+      "id": 15,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Maroua",
+      "date": "2025-07-17",
+      "time": "00:56",
+      "bus_type": "70-seater",
+      "seats": [
+        "12",
+        "13",
+        "14"
+      ],
+      "tickets": 3,
+      "amount": 51000,
+      "name": "laclong stive",
+      "phone": "68187815",
+      "email": "2004laclongstive@gmail.com",
+      "status": "pending"
+    },
+    {
+      "id": 16,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Garoua",
+      "date": "2025-07-17",
+      "time": "00:56",
+      "bus_type": "70-seater",
+      "seats": [
+        "12",
+        "13"
+      ],
+      "tickets": 2,
+      "amount": 30000,
+      "name": "laclong stive",
+      "phone": "68187815",
+      "email": "2004laclongstive@gmail.com",
+      "status": "pending"
+    },
+    {
+      "id": 17,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Limbe",
+      "date": "2025-07-05",
+      "time": "08:48",
+      "bus_type": "70-seater",
+      "seats": [
+        "6"
+      ],
+      "tickets": 1,
+      "amount": 4000,
+      "name": "laclong stive",
+      "phone": "68187815",
+      "email": "roland@gmail.com",
+      "status": "pending"
+    },
+    {
+      "id": 18,
+      "user_id": 2,
+      "from_city": "Buea",
+      "to_city": "Bafoussam",
+      "date": "2025-07-17",
+      "time": "18:01",
+      "bus_type": "70-seater",
+      "seats": [
+        "55"
+      ],
+      "tickets": 1,
+      "amount": 6500,
+      "name": "Edgar Pionzio ",
+      "phone": "653813850",
+      "email": "pionzioedgar@gmail.com",
+      "status": "pending"
+    }
+  ],
+  "shipments": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Douala",
+      "description": "New iphone X",
+      "status": "pending"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Limbe",
+      "description": "bag of rice",
+      "weight": "15",
+      "date": "2025-07-17",
+      "status": "pending"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Kumba",
+      "description": "bag of rice",
+      "weight": "25",
+      "date": "2025-07-10",
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "from_city": "Buea",
+      "to_city": "Yaounde",
+      "description": "bag of beans",
+      "weight": "24.9",
+      "date": "2025-07-10",
+      "status": "pending"
+    }
+  ]
+}

@@ -13,16 +13,23 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    // Simulate API call
-    // Replace with real API call to /api/auth/login
-    if (form.email === "admin@bueabus.com" && form.password === "$rodez$") {
-      localStorage.setItem("isAdmin", "true");
-      navigate("/dashboard");
-    } else if (form.email && form.password) {
-      localStorage.setItem("isAuthenticated", "true");
-      navigate("/");
-    } else {
-      setError("Invalid credentials");
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Login failed");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      if (data.user && data.user.role === "admin") {
+        navigate("/dashboard");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
 

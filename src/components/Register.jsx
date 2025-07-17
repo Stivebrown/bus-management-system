@@ -15,13 +15,20 @@ const Register = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    // Simulate API call
-    // Replace with real API call to /api/auth/register
-    setTimeout(() => {
-      setSuccess("Registration successful! Please check your email to verify your account.");
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Registration failed");
+      setSuccess("Registration successful! Please login.");
       setForm({ name: "", email: "", password: "" });
-      setTimeout(() => navigate("/login"), 2000);
-    }, 1000);
+      setTimeout(() => navigate("/login"), 1500);
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (

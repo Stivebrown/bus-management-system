@@ -20,6 +20,7 @@ const mockBookings = [
   { id: 2, user: "John Smith", from: "Buea", to: "Yaounde", date: "2025-07-06", status: "pending", amount: 7000 },
 ];
 
+
 const AdminDashboard = () => {
   const [tab, setTab] = useState("analytics");
   const [roleEdit, setRoleEdit] = useState({});
@@ -31,7 +32,6 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [bookings, setBookings] = useState([]);
-  const [shippings, setShippings] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -67,14 +67,6 @@ const AdminDashboard = () => {
         .then(res => res.json())
         .then(data => setBookings(data))
         .catch(() => setBookings([]));
-    }
-    if (tab === "shippings") {
-      fetch("/api/admin/shippings", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      })
-        .then(res => res.json())
-        .then(data => setShippings(data))
-        .catch(() => setShippings([]));
     }
   }, [tab]);
 
@@ -141,7 +133,6 @@ const AdminDashboard = () => {
         <button onClick={() => setTab("schedule")} className={`px-4 py-2 rounded ${tab === "schedule" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>Schedule Optimization</button>
         <button onClick={() => setTab("email")} className={`px-4 py-2 rounded ${tab === "email" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>Email Templates</button>
         <button onClick={() => setTab("bookings")} className={`px-4 py-2 rounded ${tab === "bookings" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>All Bookings</button>
-        <button onClick={() => setTab("shippings")} className={`px-4 py-2 rounded ${tab === "shippings" ? "bg-blue-700 text-white" : "bg-blue-100 text-blue-700"}`}>All Shippings</button>
       </div>
       {tab === "analytics" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -267,7 +258,10 @@ const AdminDashboard = () => {
             <thead>
               <tr className="bg-blue-50">
                 <th className="p-2">ID</th>
-                <th className="p-2">User</th>
+                <th className="p-2">Full Name</th>
+                <th className="p-2">Phone</th>
+                <th className="p-2">Seats</th>
+                <th className="p-2">Time</th>
                 <th className="p-2">From</th>
                 <th className="p-2">To</th>
                 <th className="p-2">Date</th>
@@ -279,49 +273,40 @@ const AdminDashboard = () => {
               {bookings.map(b => (
                 <tr key={b.id} className="border-t">
                   <td className="p-2">{b.id}</td>
-                  <td className="p-2">{b.user}</td>
+                  <td className="p-2">{b.name || b.user}</td>
+                  <td className="p-2">{b.phone || "-"}</td>
+                  <td className="p-2">{Array.isArray(b.seats) ? b.seats.join(", ") : (b.seats || "-")}</td>
+                  <td className="p-2">{b.time || "-"}</td>
                   <td className="p-2">{b.from}</td>
                   <td className="p-2">{b.to}</td>
                   <td className="p-2">{b.date}</td>
-                  <td className="p-2">{b.status}</td>
-                  <td className="p-2">{b.amount.toLocaleString()}</td>
+                  <td className="p-2">
+                    <button
+                      className={`px-3 py-1 rounded text-xs font-bold ${b.status === 'confirmed' ? 'bg-green-600 text-white' : 'bg-yellow-400 text-gray-800'}`}
+                      onClick={async () => {
+                        const newStatus = b.status === 'confirmed' ? 'pending' : 'confirmed';
+                        await fetch(`/api/admin/bookings/${b.id}`, {
+                          method: 'PUT',
+                          headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                          },
+                          body: JSON.stringify({ status: newStatus })
+                        });
+                        setBookings(bookings => bookings.map(row => row.id === b.id ? { ...row, status: newStatus } : row));
+                      }}
+                    >
+                      {b.status === 'confirmed' ? 'Complete' : 'Pending'}
+                    </button>
+                  </td>
+                  <td className="p-2">{b.amount ? b.amount.toLocaleString() : "-"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       )}
-      {tab === "shippings" && (
-        <div className="bg-white rounded shadow p-4 overflow-x-auto">
-          <h3 className="font-semibold mb-2">All Shippings</h3>
-          <table className="w-full text-left border mb-4">
-            <thead>
-              <tr className="bg-blue-50">
-                <th className="p-2">ID</th>
-                <th className="p-2">Sender</th>
-                <th className="p-2">Origin</th>
-                <th className="p-2">Destination</th>
-                <th className="p-2">Date</th>
-                <th className="p-2">Status</th>
-                <th className="p-2">Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {shippings.map(s => (
-                <tr key={s.id} className="border-t">
-                  <td className="p-2">{s.id}</td>
-                  <td className="p-2">{s.sender}</td>
-                  <td className="p-2">{s.origin}</td>
-                  <td className="p-2">{s.destination}</td>
-                  <td className="p-2">{s.date}</td>
-                  <td className="p-2">{s.status}</td>
-                  <td className="p-2">{s.amount.toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+
     </div>
   );
 };

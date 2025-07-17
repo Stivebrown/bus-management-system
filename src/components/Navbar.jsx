@@ -38,12 +38,12 @@ const Navbar = () => {
 
   return (
     <nav className={`bg-white dark:bg-gray-900 shadow-md py-4 px-8 flex justify-between items-center relative`}>
-      <div className="text-2xl font-bold text-blue-700 dark:text-blue-200">Buea Bus & Shipping</div>
+      <div className="text-2xl font-bold text-blue-700 dark:text-blue-200">Buea Bus Booking</div>
       {/* Desktop menu */}
       <div className="hidden md:flex space-x-6 items-center">
         <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Home</Link>
         <Link to="/book" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Book Bus</Link>
-        <Link to="/ship" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Ship Goods</Link>
+        
         {isAdmin ? (
           <Link to="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-blue-700 font-medium">Admin</Link>
         ) : null}

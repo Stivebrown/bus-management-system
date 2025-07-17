@@ -1,14 +1,33 @@
 const express = require('express');
 const router = express.Router();
+const { readDB, writeDB } = require('../db-json');
 
-// Get all shipments (placeholder)
+// Get all shipments
 router.get('/', (req, res) => {
-  res.json([{ id: 1, from: 'Buea', to: 'Yaounde', status: 'In Transit' }]);
+  const db = readDB();
+  res.json(db.shipments);
 });
 
-// Create a new shipment (placeholder)
+// Create a new shipment
 router.post('/', (req, res) => {
-  res.json({ message: 'Shipping request created (placeholder)' });
+  const { user_id, from_city, to_city, description, weight, date } = req.body;
+  if (!user_id || !from_city || !to_city || !date) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+  const db = readDB();
+  const newShipment = {
+    id: db.shipments.length + 1,
+    user_id,
+    from_city,
+    to_city,
+    description: description || '',
+    weight: weight || '',
+    date,
+    status: 'pending'
+  };
+  db.shipments.push(newShipment);
+  writeDB(db);
+  res.status(201).json(newShipment);
 });
 
 module.exports = router;
